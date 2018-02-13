@@ -1,6 +1,7 @@
 package com.cdeworks.vendas.api;
 
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,13 +14,20 @@ import com.cdeworks.vendas.api.domain.entities.Cidade;
 import com.cdeworks.vendas.api.domain.entities.Cliente;
 import com.cdeworks.vendas.api.domain.entities.Endereco;
 import com.cdeworks.vendas.api.domain.entities.Estado;
+import com.cdeworks.vendas.api.domain.entities.Pagamento;
+import com.cdeworks.vendas.api.domain.entities.PagamentoBoleto;
+import com.cdeworks.vendas.api.domain.entities.PagamentoCartao;
+import com.cdeworks.vendas.api.domain.entities.Pedido;
 import com.cdeworks.vendas.api.domain.entities.Produto;
+import com.cdeworks.vendas.api.domain.types.EstadoPagamento;
 import com.cdeworks.vendas.api.domain.types.TipoCliente;
 import com.cdeworks.vendas.api.repositories.CategoriaRepository;
 import com.cdeworks.vendas.api.repositories.CidadeRepository;
 import com.cdeworks.vendas.api.repositories.ClienteRepository;
 import com.cdeworks.vendas.api.repositories.EnderecoRepository;
 import com.cdeworks.vendas.api.repositories.EstadoRepository;
+import com.cdeworks.vendas.api.repositories.PagamentoRepository;
+import com.cdeworks.vendas.api.repositories.PedidoRepository;
 import com.cdeworks.vendas.api.repositories.ProdutoRepository;
 
 @SpringBootApplication
@@ -43,13 +51,19 @@ public class VendasApiApplication implements CommandLineRunner{
 	@Autowired
 	private EnderecoRepository enderecoRepository;
 	
+	@Autowired
+	private PedidoRepository pedidoRepository;
+	
+	@Autowired
+	private PagamentoRepository pagamentoRepository;
+	
 	public static void main(String[] args) {
 		SpringApplication.run(VendasApiApplication.class, args);
 	}
 
 	@Override
 	public void run(String... arg0) throws Exception {
-	/*	Categoria cat1 = new Categoria(null,"Informática");
+		Categoria cat1 = new Categoria(null,"Informática");
 		Categoria cat2 = new Categoria(null,"Escritório");
 		
 		Produto prod1 = new Produto(null, "Computador", BigDecimal.valueOf(2000.00));
@@ -89,7 +103,28 @@ public class VendasApiApplication implements CommandLineRunner{
 		cli.getEnderecos().addAll(Arrays.asList(e1, e2));
 		
 		clienteRepository.save(cli);
-		enderecoRepository.save(Arrays.asList(e1, e2)); */
+		enderecoRepository.save(Arrays.asList(e1, e2)); 
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm");
+		
+		Pedido ped1 = new Pedido(null, sdf.parse("30/09/2017 10:32"), cli, e1);
+		Pedido ped2 = new Pedido(null, sdf.parse("10/10/2017 19:35"), cli, e2);
+		
+		Pagamento pagto1 = new PagamentoCartao(null, EstadoPagamento.QUITADO, 
+					ped1, 6);
+		
+		ped1.setPagamento(pagto1);
+		
+		Pagamento pagto2 = new PagamentoBoleto(null, EstadoPagamento.PENDENTE, 
+					ped2, sdf.parse("20/10/2017 00:00"), null);
+		ped2.setPagamento(pagto2);
+		
+		cli.getPedidos().addAll(Arrays.asList(ped1, ped2));
+		
+		pedidoRepository.save(Arrays.asList(ped1, ped2));
+		pagamentoRepository.save(Arrays.asList(pagto1, pagto2));
+		
+		
 		
 	}
 }
