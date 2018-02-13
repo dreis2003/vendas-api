@@ -10,10 +10,15 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.cdeworks.vendas.api.domain.entities.Categoria;
 import com.cdeworks.vendas.api.domain.entities.Cidade;
+import com.cdeworks.vendas.api.domain.entities.Cliente;
+import com.cdeworks.vendas.api.domain.entities.Endereco;
 import com.cdeworks.vendas.api.domain.entities.Estado;
 import com.cdeworks.vendas.api.domain.entities.Produto;
+import com.cdeworks.vendas.api.domain.types.TipoCliente;
 import com.cdeworks.vendas.api.repositories.CategoriaRepository;
 import com.cdeworks.vendas.api.repositories.CidadeRepository;
+import com.cdeworks.vendas.api.repositories.ClienteRepository;
+import com.cdeworks.vendas.api.repositories.EnderecoRepository;
 import com.cdeworks.vendas.api.repositories.EstadoRepository;
 import com.cdeworks.vendas.api.repositories.ProdutoRepository;
 
@@ -31,6 +36,12 @@ public class VendasApiApplication implements CommandLineRunner{
 	
 	@Autowired
 	private EstadoRepository estadoRepository;
+	
+	@Autowired
+	private ClienteRepository clienteRepository;
+	
+	@Autowired
+	private EnderecoRepository enderecoRepository;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(VendasApiApplication.class, args);
@@ -62,12 +73,23 @@ public class VendasApiApplication implements CommandLineRunner{
 		Cidade cid1 = new Cidade(null, "Uberlandia", est1);
 		Cidade cid2 = new Cidade(null, "São Paulo", est2);
 		Cidade cid3 = new Cidade(null, "Campinas", est2);
+		Cidade cid4 = new Cidade(null, "Guarulhos", est2);
 		
 		est1.getCidades().add(cid1);
-		est2.getCidades().addAll(Arrays.asList(cid2, cid3));
+		est2.getCidades().addAll(Arrays.asList(cid2, cid3, cid4));
 		
 		estadoRepository.save(Arrays.asList(est1, est2));
-		cidadeRepository.save(Arrays.asList(cid3, cid3, cid3));
+		cidadeRepository.save(Arrays.asList(cid1, cid2, cid3, cid4)); 
+		
+		Cliente cli = new Cliente(null,"Cristiana Cruz", "cris7677@gmail.com", "26310396889", TipoCliente.PF);
+		cli.getTelefones().addAll(Arrays.asList("11976906262", "1124528151"));
+		
+		Endereco e1 = new Endereco(null, "Av. da Paz", "209", "Bloco 4 apto 124", "Vl São Judas Tadeu", "07061032", cli, cid4);
+		Endereco e2 = new Endereco(null, "Rua Octavio Nunes da Silva", "164", "", "Vl Sion", "07021001", cli, cid4);
+		cli.getEnderecos().addAll(Arrays.asList(e1, e2));
+		
+		clienteRepository.save(cli);
+		enderecoRepository.save(Arrays.asList(e1, e2));
 		
 	}
 }
