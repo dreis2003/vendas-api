@@ -1,7 +1,5 @@
 package com.cdeworks.vendas.api.resources;
 
-import java.util.Optional;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,15 +27,11 @@ public class CategoriaResource {
 		log.info("Buscando categoria por ID: {}", id);
 		
 		Response<Categoria> response = new Response<>();
-		Optional<Categoria> categoria = categoriaService.buscarPorId(id);
+		
+		Categoria categoria = categoriaService.buscarPorId(id);
 
-		if (!categoria.isPresent()) {
-			log.info("Categoria não encontrada para o ID: {}", id);
-			response.getErrors().add("Categoria não encontrada para o ID " + id);
-			return ResponseEntity.badRequest().body(response);
-		}
-
-		response.setData(categoria.get());
+		response.setData(categoria);
+		
 		return ResponseEntity.ok(response);
 	}
 

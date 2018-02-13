@@ -1,13 +1,12 @@
 package com.cdeworks.vendas.api.services.impl;
 
-import java.util.Optional;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cdeworks.vendas.api.domain.entities.Categoria;
+import com.cdeworks.vendas.api.exceptions.CDEWorksNotFoundException;
 import com.cdeworks.vendas.api.repositories.CategoriaRepository;
 import com.cdeworks.vendas.api.services.CategoriaService;
 
@@ -19,9 +18,15 @@ public class CategoriaServiceImpl implements CategoriaService {
 	@Autowired
 	private CategoriaRepository categoriaRepository;
 	
-	public Optional<Categoria> buscarPorId(Long id) {
+	public Categoria buscarPorId(Long id) {
 		log.info("Buscando categoria pelo ID: {}", id);
-		return Optional.ofNullable(this. categoriaRepository.findOne(id));
+		Categoria categoria = this. categoriaRepository.findOne(id);
+		if (categoria == null) {
+			log.warn("Categoria nao encontrada com o ID: {}, Tipo: " + Categoria.class.getName(), id);
+			throw new CDEWorksNotFoundException("Categoria nao encontrada com o ID: " + id
+												+ ", Tipo: " + Categoria.class.getName());
+		}
+		return categoria;
 	}
 	
 }

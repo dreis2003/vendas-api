@@ -1,5 +1,6 @@
 package com.cdeworks.vendas.api.services;
 
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import java.util.Optional;
@@ -39,9 +40,9 @@ public class CategoriaServiceTest {
 	
 	@Test
 	public void testBuscarPorId() {
-		Optional<Categoria> empresa = this.categoriaService.buscarPorId(ID);
+		Categoria categoria = this.categoriaService.buscarPorId(ID);
 		
-		assertTrue(empresa.isPresent());
+		assertNotNull(categoria);
 	}
 	
 }
