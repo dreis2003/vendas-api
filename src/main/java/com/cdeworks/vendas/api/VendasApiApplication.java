@@ -14,6 +14,7 @@ import com.cdeworks.vendas.api.domain.entities.Cidade;
 import com.cdeworks.vendas.api.domain.entities.Cliente;
 import com.cdeworks.vendas.api.domain.entities.Endereco;
 import com.cdeworks.vendas.api.domain.entities.Estado;
+import com.cdeworks.vendas.api.domain.entities.ItemPedido;
 import com.cdeworks.vendas.api.domain.entities.Pagamento;
 import com.cdeworks.vendas.api.domain.entities.PagamentoBoleto;
 import com.cdeworks.vendas.api.domain.entities.PagamentoCartao;
@@ -26,6 +27,7 @@ import com.cdeworks.vendas.api.repositories.CidadeRepository;
 import com.cdeworks.vendas.api.repositories.ClienteRepository;
 import com.cdeworks.vendas.api.repositories.EnderecoRepository;
 import com.cdeworks.vendas.api.repositories.EstadoRepository;
+import com.cdeworks.vendas.api.repositories.ItemPedidoRepository;
 import com.cdeworks.vendas.api.repositories.PagamentoRepository;
 import com.cdeworks.vendas.api.repositories.PedidoRepository;
 import com.cdeworks.vendas.api.repositories.ProdutoRepository;
@@ -56,6 +58,9 @@ public class VendasApiApplication implements CommandLineRunner{
 	
 	@Autowired
 	private PagamentoRepository pagamentoRepository;
+	
+	@Autowired
+	private ItemPedidoRepository itemPedidoRepository;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(VendasApiApplication.class, args);
@@ -124,6 +129,19 @@ public class VendasApiApplication implements CommandLineRunner{
 		pedidoRepository.save(Arrays.asList(ped1, ped2));
 		pagamentoRepository.save(Arrays.asList(pagto1, pagto2));
 		
+		
+		ItemPedido ip1 = new ItemPedido(ped1, prod1, BigDecimal.ZERO, 1, BigDecimal.valueOf(2000.00));
+		ItemPedido ip2 = new ItemPedido(ped1, prod3, BigDecimal.ZERO, 2, BigDecimal.valueOf(80.00));
+		ItemPedido ip3 = new ItemPedido(ped2, prod2, BigDecimal.valueOf(100.00), 1, BigDecimal.valueOf(800.00));
+		
+		ped1.getItens().addAll(Arrays.asList(ip1, ip2));
+		ped2.getItens().add(ip3);
+		
+		prod1.getItens().addAll(Arrays.asList(ip1));
+		prod2.getItens().addAll(Arrays.asList(ip3));
+		prod3.getItens().addAll(Arrays.asList(ip2));
+		
+		itemPedidoRepository.save(Arrays.asList(ip1, ip2, ip3));
 		
 		
 	}
