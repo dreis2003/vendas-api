@@ -49,7 +49,7 @@ public class VendasApiApplication implements CommandLineRunner{
 
 	@Override
 	public void run(String... arg0) throws Exception {
-		Categoria cat1 = new Categoria(null,"Informática");
+	/*	Categoria cat1 = new Categoria(null,"Informática");
 		Categoria cat2 = new Categoria(null,"Escritório");
 		
 		Produto prod1 = new Produto(null, "Computador", BigDecimal.valueOf(2000.00));
@@ -89,7 +89,7 @@ public class VendasApiApplication implements CommandLineRunner{
 		cli.getEnderecos().addAll(Arrays.asList(e1, e2));
 		
 		clienteRepository.save(cli);
-		enderecoRepository.save(Arrays.asList(e1, e2));
+		enderecoRepository.save(Arrays.asList(e1, e2)); */
 		
 	}
 }
