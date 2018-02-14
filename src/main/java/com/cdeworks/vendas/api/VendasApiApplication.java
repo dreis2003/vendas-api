@@ -68,7 +68,7 @@ public class VendasApiApplication implements CommandLineRunner{
 
 	@Override
 	public void run(String... arg0) throws Exception {
-		Categoria cat1 = new Categoria(null,"Informática");
+		/*Categoria cat1 = new Categoria(null,"Informática");
 		Categoria cat2 = new Categoria(null,"Escritório");
 		
 		Produto prod1 = new Produto(null, "Computador", BigDecimal.valueOf(2000.00));
@@ -142,7 +142,7 @@ public class VendasApiApplication implements CommandLineRunner{
 		prod3.getItens().addAll(Arrays.asList(ip2));
 		
 		itemPedidoRepository.save(Arrays.asList(ip1, ip2, ip3));
-		
+		*/
 		
 	}
 }
