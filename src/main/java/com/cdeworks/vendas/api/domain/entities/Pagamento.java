@@ -14,7 +14,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.cdeworks.vendas.api.domain.types.EstadoPagamento;
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "pagamento")
@@ -29,7 +29,7 @@ public abstract class Pagamento implements Serializable{
 	@Enumerated(EnumType.STRING)
 	private EstadoPagamento estado;
 	
-	@JsonBackReference
+	@JsonIgnore
 	@OneToOne
 	@JoinColumn(name = "pedido_id")
 	@MapsId

@@ -5,7 +5,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.cdeworks.vendas.api.domain.entities.Categoria;
 import com.cdeworks.vendas.api.domain.entities.Cliente;
 import com.cdeworks.vendas.api.exceptions.CDEWorksNotFoundException;
 import com.cdeworks.vendas.api.repositories.ClienteRepository;

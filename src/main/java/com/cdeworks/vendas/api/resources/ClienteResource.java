@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.cdeworks.vendas.api.domain.entities.Categoria;
 import com.cdeworks.vendas.api.domain.entities.Cliente;
 import com.cdeworks.vendas.api.resources.response.Response;
 import com.cdeworks.vendas.api.services.ClienteService;

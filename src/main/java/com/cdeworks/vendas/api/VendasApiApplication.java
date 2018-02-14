@@ -9,6 +9,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import com.cdeworks.vendas.api.domain.builders.EnderecoBuilder;
 import com.cdeworks.vendas.api.domain.entities.Categoria;
 import com.cdeworks.vendas.api.domain.entities.Cidade;
 import com.cdeworks.vendas.api.domain.entities.Cliente;
@@ -68,7 +69,7 @@ public class VendasApiApplication implements CommandLineRunner{
 
 	@Override
 	public void run(String... arg0) throws Exception {
-		/*Categoria cat1 = new Categoria(null,"Informática");
+		Categoria cat1 = new Categoria(null,"Informática");
 		Categoria cat2 = new Categoria(null,"Escritório");
 		
 		Produto prod1 = new Produto(null, "Computador", BigDecimal.valueOf(2000.00));
@@ -102,9 +103,31 @@ public class VendasApiApplication implements CommandLineRunner{
 		
 		Cliente cli = new Cliente(null,"Cristiana Cruz", "cris7677@gmail.com", "26310396889", TipoCliente.PF);
 		cli.getTelefones().addAll(Arrays.asList("11976906262", "1124528151"));
+		EnderecoBuilder builder = new EnderecoBuilder();
 		
-		Endereco e1 = new Endereco(null, "Av. da Paz", "209", "Bloco 4 apto 124", "Vl São Judas Tadeu", "07061032", cli, cid4);
-		Endereco e2 = new Endereco(null, "Rua Octavio Nunes da Silva", "164", "", "Vl Sion", "07021001", cli, cid4);
+			
+		Endereco e1 =  builder
+				.setId(null)
+				.setLogradouro("Av. da Paz")
+				.setNumero("209")
+				.setComplemento("Bloco 4 apto 124")
+				.setBairro("Vl São Judas Tadeu")
+				.setCep("07061032")
+				.setCliente(cli)
+				.setCidade(cid4)
+				.build();
+				
+		Endereco e2 = builder
+				.setId(null)
+				.setLogradouro("Rua Octavio Nunes da Silva")
+				.setNumero("164")
+				.setComplemento(null)
+				.setBairro("Vl Sion")
+				.setCep("07021001")
+				.setCliente(cli)
+				.setCidade(cid4)
+				.build();
+				
 		cli.getEnderecos().addAll(Arrays.asList(e1, e2));
 		
 		clienteRepository.save(cli);
@@ -142,7 +165,6 @@ public class VendasApiApplication implements CommandLineRunner{
 		prod3.getItens().addAll(Arrays.asList(ip2));
 		
 		itemPedidoRepository.save(Arrays.asList(ip1, ip2, ip3));
-		*/
 		
 	}
 }
